@@ -3,179 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2025 Mezuniyet Yıllığı - Galeri</title>
+    <title>2026 Mezuniyet Yıllığı - Exclusive Galeri</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+
     <style>
-        /* --- Temel Ayarlar --- */
+        /* --- Premium Renk ve Tema Ayarları --- */
         :root {
-            --primary-color: #2c3e50;
-            --accent-color: #e67e22; /* Mezuniyet turuncusu/altını */
-            --bg-color: #f4f4f4;
-            --text-color: #333;
+            --bg-dark: #050505;
+            --bg-card: #0f0f0f;
+            /* Lüks Altın Gradyanı */
+            --gold-gradient: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            --gold-solid: #d4af37;
+            --text-main: #fcfcfc;
+            --text-muted: #888888;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
         }
+
+        /* --- Genel Ayarlar --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Arka Plandaki Gizli Işık Hüzmesi (Derinlik Katar) */
+        .ambient-light {
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80vw;
+            height: 50vh;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(5, 5, 5, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Özel Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--gold-solid); }
+
+        /* --- Gösterişli Başlık Alanı --- */
+        header {
+            text-align: center;
+            padding: 6rem 1rem 4rem;
+            animation: fadeInDown 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            position: relative;
         }
         
-        /* --- Başlık Alanı --- */
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 2rem 1rem;
+        header h1 { 
+            font-family: var(--font-heading);
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 15px;
+            letter-spacing: 4px;
+            font-weight: 700;
+            /* Altın Metin Efekti */
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
         }
-        header h1 { margin: 0; font-size: 2rem; }
-        header p { margin-top: 10px; opacity: 0.8; }
+        
+        header p { 
+            font-size: 1.1rem; 
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 1px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-transform: uppercase;
+        }
 
-        /* --- Sekmeler (Tabs) --- */
+        /* --- Lüks Sekmeler (Tabs) --- */
         .tabs {
             display: flex;
             justify-content: center;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            gap: 40px;
+            padding: 20px;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
+        
         .tab-btn {
-            padding: 15px 30px;
+            background: transparent;
             border: none;
-            background: none;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            padding: 10px 5px;
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s ease;
+            position: relative;
+            transition: all 0.4s ease;
         }
-        .tab-btn:hover { background-color: #f9f9f9; }
-        .tab-btn.active {
-            color: var(--accent-color);
-            border-bottom: 3px solid var(--accent-color);
+        
+        /* Işıltılı Alt Çizgi Animasyonu */
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gold-gradient);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); /* Neon parlaması */
+            transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
+        
+        .tab-btn:hover { color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+        .tab-btn.active { color: var(--gold-solid); font-weight: 600; }
+        .tab-btn.active::after { width: 100%; }
 
         /* --- İçerik Alanı --- */
         .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-            min-height: 60vh;
+            max-width: 1400px;
+            margin: 50px auto;
+            padding: 0 20px;
+            min-height: 50vh;
         }
         
         .content-section {
-            display: none; /* Varsayılan olarak gizli */
-            animation: fadeIn 0.5s ease;
+            display: none;
+            opacity: 0;
         }
+        
         .content-section.active {
-            display: block; /* Sadece aktif olan görünür */
+            display: block;
+            animation: fadeInFade 0.8s ease forwards;
         }
 
-        /* --- Fotoğraf Grid Yapısı --- */
+        /* --- Fotoğraf Grid ve Premium Hover Efektleri --- */
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
         }
+        
         .photo-item {
-            background: white;
-            padding: 5px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            border-radius: 4px; /* Keskin hatlar daha modern durur */
+            overflow: hidden;
+            background: var(--bg-card);
+            aspect-ratio: 3/4; /* Dergi/Editorial kapağı tarzı */
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            /* Kademeli geliş için başlangıç durumu */
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            animation: staggerPop 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
+        
         .photo-item img {
             width: 100%;
-            height: auto;
-            border-radius: 4px;
-            display: block;
-            transition: transform 0.3s ease;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
+            filter: brightness(0.85) grayscale(20%); /* Başlangıçta hafif karanlık ve sinematik */
         }
-        .photo-item:hover img { transform: scale(1.02); }
+        
+        /* Cam parlaması efekti */
+        .photo-item::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.7s;
+            pointer-events: none;
+        }
 
-        /* --- Video Yapısı --- */
+        .photo-item:hover img {
+            transform: scale(1.05);
+            filter: brightness(1.1) grayscale(0%); /* Üzerine gelince tam renk ve aydınlık */
+        }
+
+        .photo-item:hover::after {
+            left: 200%; /* Işık huzmesi soldan sağa kayar */
+        }
+        
+        /* Resimlerin etrafına ince, zarif bir altın çerçeve belirir */
+        .photo-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(212, 175, 55, 0);
+            transition: border-color 0.8s ease;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .photo-item:hover::before { border-color: rgba(212, 175, 55, 0.6); }
+
+        /* --- Video Alanı --- */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
+            gap: 40px;
         }
+        
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 Oranı */
+            padding-bottom: 56.25%;
             height: 0;
+            border-radius: 4px;
             overflow: hidden;
-            border-radius: 8px;
-            background: #000;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            border: 1px solid rgba(255,255,255,0.03);
+            transition: transform 0.5s ease;
         }
+        
+        .video-wrapper:hover {
+            transform: translateY(-10px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.1);
+        }
+
         .video-wrapper iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             border: 0;
         }
 
-        /* --- Animasyon --- */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        /* --- Keyframe Animasyonları --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInFade {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes staggerPop {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
 
         /* --- Footer --- */
         footer {
             text-align: center;
-            padding: 20px;
-            background: var(--primary-color);
-            color: white;
-            margin-top: 30px;
-            font-size: 0.9rem;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 80px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
         
+        footer span { 
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: var(--font-heading); 
+            font-style: italic;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: none;
+            letter-spacing: 1px;
+        }
+
         /* --- Mobil Uyumluluk --- */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            header { padding: 4rem 1rem 2rem; }
+            .ambient-light { width: 150vw; top: -10%; }
+            .photo-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
+            .tabs { padding: 15px; gap: 20px; }
+            .tab-btn { font-size: 0.8rem; letter-spacing: 1px; }
             .video-grid { grid-template-columns: 1fr; }
-            header h1 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
+    <div class="ambient-light"></div>
+
     <header>
-        <h1>🎓 2025 Mezuniyet Hatıraları</h1>
-        <p>Birlikte geçirdiğimiz güzel günlerin anısına...</p>
+        <h1>Mezuniyet '26</h1>
+        <p>Geleceğe Bırakılan Altın İzler</p>
     </header>
 
     <div class="tabs">
-        <button class="tab-btn active" onclick="openTab('photos', this)">📸 Fotoğraflar</button>
-        <button class="tab-btn" onclick="openTab('videos', this)">🎥 Videolar</button>
+        <button class="tab-btn active" onclick="openTab('photos', this)">Kareler</button>
+        <button class="tab-btn" onclick="openTab('videos', this)">Videolar</button>
     </div>
 
     <div class="container">
         
         <div id="photos" class="content-section active">
-            <div class="photo-grid">
-                <div class="photo-item">
-                    <img src="" alt="Mezuniyet 1">
-                </div>
-                <div class="photo-item">
-                    <img src="" alt="Mezuniyet 2">
-                </div>
-                <div class="photo-item">
-                    <img src="" alt="Mezuniyet 3">
-                </div>
+            <div class="photo-grid" id="dynamic-gallery">
                 </div>
         </div>
 
         <div id="videos" class="content-section">
             <div class="video-grid">
                 <div class="video-wrapper">
-                    <iframe src="" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?si=Rj3LgqA_9bFkR2N_" allowfullscreen></iframe>
                 </div>
-                
                 <div class="video-wrapper">
-                    <iframe src="" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?si=Rj3LgqA_9bFkR2N_" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -183,29 +336,56 @@
     </div>
 
     <footer>
-        <p>© 2025 Mezuniyet Yıllığı Galeri</p>
+        <p>Gururla Sunarız <br><br> <span>Class of '26</span></p>
     </footer>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const toplamFotoSayisi = 182; 
+            const klasorYolu = 'galeri/'; 
+            const galeriDiv = document.getElementById('dynamic-gallery');
+
+            // --- Kademeli Yüklenme (Staggered Animation) Mantığı ---
+            for (let i = 1; i <= toplamFotoSayisi; i++) {
+                const item = document.createElement('div');
+                item.className = 'photo-item';
+                
+                // Her bir fotoğrafa sırasıyla biraz daha gecikme (delay) ekliyoruz
+                // Böylece dalga dalga yükleniyormuş gibi görünüyor.
+                const gecikme = (i * 0.05).toFixed(2); 
+                item.style.animationDelay = `${gecikme}s`;
+
+                item.innerHTML = `
+                    <img src="${klasorYolu}mezuniyet (${i}).jpeg" 
+                         alt="Mezuniyet Anısı ${i}" 
+                         loading="lazy"
+                         onerror="this.parentElement.style.display='none'"> 
+                `;
+                
+                galeriDiv.appendChild(item);
+            }
+        });
+
+        // --- Gelişmiş Sekme Geçişi ---
         function openTab(tabName, btnElement) {
+            // Aktif buton ayarı
+            var buttons = document.getElementsByClassName("tab-btn");
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            btnElement.classList.add("active");
+
             // Tüm içerikleri gizle
             var contents = document.getElementsByClassName("content-section");
             for (var i = 0; i < contents.length; i++) {
                 contents[i].classList.remove("active");
             }
 
-            // Tüm butonların aktifliğini kaldır
-            var buttons = document.getElementsByClassName("tab-btn");
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove("active");
-            }
-
-            // Seçilen içeriği göster ve butonu aktif yap
-            document.getElementById(tabName).classList.add("active");
-            btnElement.classList.add("active");
+            // Seçileni animasyonlu göster (Kısa bir gecikme ile)
+            setTimeout(() => {
+                document.getElementById(tabName).classList.add("active");
+            }, 50);
         }
     </script>
 </body>
-
 </html>
-
