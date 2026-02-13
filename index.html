@@ -223,13 +223,14 @@
         
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 56.25%; /* 16:9 oranı */
             height: 0;
             border-radius: 4px;
             overflow: hidden;
             box-shadow: 0 15px 40px rgba(0,0,0,0.9);
             border: 1px solid rgba(255,255,255,0.03);
             transition: transform 0.5s ease;
+            background: #000;
         }
         
         .video-wrapper:hover {
@@ -238,11 +239,12 @@
             box-shadow: 0 20px 50px rgba(212, 175, 55, 0.1);
         }
 
-        .video-wrapper iframe {
+        .video-wrapper video {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
             border: 0;
+            object-fit: contain; /* Videonun kesilmemesi için */
         }
 
         /* --- Keyframe Animasyonları --- */
@@ -323,14 +325,8 @@
         </div>
 
         <div id="videos" class="content-section">
-            <div class="video-grid">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?si=Rj3LgqA_9bFkR2N_" allowfullscreen></iframe>
+            <div class="video-grid" id="dynamic-video-grid">
                 </div>
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4?si=Rj3LgqA_9bFkR2N_" allowfullscreen></iframe>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -341,17 +337,15 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // --- 1. FOTOĞRAF YÜKLEME ---
             const toplamFotoSayisi = 182; 
             const klasorYolu = 'galeri/'; 
             const galeriDiv = document.getElementById('dynamic-gallery');
 
-            // --- Kademeli Yüklenme (Staggered Animation) Mantığı ---
             for (let i = 1; i <= toplamFotoSayisi; i++) {
                 const item = document.createElement('div');
                 item.className = 'photo-item';
                 
-                // Her bir fotoğrafa sırasıyla biraz daha gecikme (delay) ekliyoruz
-                // Böylece dalga dalga yükleniyormuş gibi görünüyor.
                 const gecikme = (i * 0.05).toFixed(2); 
                 item.style.animationDelay = `${gecikme}s`;
 
@@ -363,6 +357,26 @@
                 `;
                 
                 galeriDiv.appendChild(item);
+            }
+
+            // --- 2. VİDEO YÜKLEME ---
+            const toplamVideoSayisi = 20; // İstediğin 20 video
+            const videoKlasoru = 'video/'; // Videoların klasör adı
+            const videoDiv = document.getElementById('dynamic-video-grid');
+
+            for (let i = 1; i <= toplamVideoSayisi; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'video-wrapper';
+                
+                // HTML5 Video etiketi ile MP4 oynatıcı eklendi
+                wrapper.innerHTML = `
+                    <video controls preload="metadata">
+                        <source src="${videoKlasoru}anlar (${i}).mp4" type="video/mp4">
+                        Tarayıcınız bu videoyu desteklemiyor.
+                    </video>
+                `;
+                
+                videoDiv.appendChild(wrapper);
             }
         });
 
@@ -379,9 +393,17 @@
             var contents = document.getElementsByClassName("content-section");
             for (var i = 0; i < contents.length; i++) {
                 contents[i].classList.remove("active");
+                
+                // Sekme değiştiğinde tüm videoları durdur (arka planda ses gelmemesi için)
+                if (tabName !== 'videos') {
+                    var videos = contents[i].getElementsByTagName('video');
+                    for(var j=0; j<videos.length; j++){
+                        videos[j].pause();
+                    }
+                }
             }
 
-            // Seçileni animasyonlu göster (Kısa bir gecikme ile)
+            // Seçileni animasyonlu göster
             setTimeout(() => {
                 document.getElementById(tabName).classList.add("active");
             }, 50);
