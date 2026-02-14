@@ -14,7 +14,6 @@
         :root {
             --bg-dark: #050505;
             --bg-card: #0f0f0f;
-            /* Lüks Altın Gradyanı */
             --gold-gradient: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
             --gold-solid: #d4af37;
             --text-main: #fcfcfc;
@@ -35,271 +34,174 @@
             position: relative;
         }
 
-        /* Arka Plandaki Gizli Işık Hüzmesi (Derinlik Katar) */
         .ambient-light {
             position: absolute;
-            top: -20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80vw;
-            height: 50vh;
+            top: -20%; left: 50%; transform: translateX(-50%);
+            width: 80vw; height: 50vh;
             background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(5, 5, 5, 0) 70%);
-            z-index: -1;
-            pointer-events: none;
+            z-index: -1; pointer-events: none;
         }
 
-        /* Özel Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
         ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--gold-solid); }
 
-        /* --- Gösterişli Başlık Alanı --- */
+        /* --- Başlık --- */
         header {
-            text-align: center;
-            padding: 6rem 1rem 4rem;
+            text-align: center; padding: 6rem 1rem 4rem;
             animation: fadeInDown 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            position: relative;
         }
-        
         header h1 { 
             font-family: var(--font-heading);
-            font-size: clamp(3rem, 6vw, 5rem);
-            margin-bottom: 15px;
-            letter-spacing: 4px;
-            font-weight: 700;
-            /* Altın Metin Efekti */
+            font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 15px;
+            letter-spacing: 4px; font-weight: 700;
             background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            animation: shine 5s linear infinite;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: shine 5s linear infinite;
         }
-        
         header p { 
-            font-size: 1.1rem; 
-            color: var(--text-muted);
-            font-weight: 300;
-            letter-spacing: 1px;
-            max-width: 600px;
-            margin: 0 auto;
-            text-transform: uppercase;
+            font-size: 1.1rem; color: var(--text-muted); font-weight: 300;
+            letter-spacing: 1px; max-width: 600px; margin: 0 auto; text-transform: uppercase;
         }
 
-        /* --- Lüks Sekmeler (Tabs) --- */
+        /* --- Sekmeler --- */
         .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            padding: 20px;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            display: flex; justify-content: center; gap: 40px;
+            padding: 20px; background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 100;
             border-bottom: 1px solid rgba(212, 175, 55, 0.1);
         }
-        
         .tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            padding: 10px 5px;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.4s ease;
+            background: transparent; border: none; color: var(--text-muted);
+            font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 3px; padding: 10px 5px;
+            cursor: pointer; position: relative; transition: all 0.4s ease;
         }
-        
-        /* Işıltılı Alt Çizgi Animasyonu */
         .tab-btn::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--gold-gradient);
-            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); /* Neon parlaması */
+            content: ''; position: absolute; bottom: 0; left: 50%;
+            transform: translateX(-50%); width: 0; height: 2px;
+            background: var(--gold-gradient); box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
             transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        
         .tab-btn:hover { color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
         .tab-btn.active { color: var(--gold-solid); font-weight: 600; }
         .tab-btn.active::after { width: 100%; }
 
         /* --- İçerik Alanı --- */
-        .container {
-            max-width: 1400px;
-            margin: 50px auto;
-            padding: 0 20px;
-            min-height: 50vh;
-        }
-        
-        .content-section {
-            display: none;
-            opacity: 0;
-        }
-        
-        .content-section.active {
-            display: block;
-            animation: fadeInFade 0.8s ease forwards;
-        }
+        .container { max-width: 1400px; margin: 50px auto; padding: 0 20px; min-height: 50vh; }
+        .content-section { display: none; opacity: 0; }
+        .content-section.active { display: block; animation: fadeInFade 0.8s ease forwards; }
 
-        /* --- Fotoğraf Grid ve Premium Hover Efektleri --- */
+        /* --- Grid Tasarımları --- */
         .photo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px;
         }
-        
-        .photo-item {
-            position: relative;
-            border-radius: 4px; /* Keskin hatlar daha modern durur */
-            overflow: hidden;
-            background: var(--bg-card);
-            aspect-ratio: 3/4; /* Dergi/Editorial kapağı tarzı */
-            cursor: pointer;
+        .photo-item, .video-wrapper {
+            position: relative; border-radius: 4px; overflow: hidden;
+            background: var(--bg-card); cursor: pointer;
             box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            /* Kademeli geliş için başlangıç durumu */
-            opacity: 0;
-            transform: translateY(30px) scale(0.95);
+            opacity: 0; transform: translateY(30px) scale(0.95);
             animation: staggerPop 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
+        .photo-item { aspect-ratio: 3/4; }
+        .video-wrapper { padding-bottom: 56.25%; height: 0; border: 1px solid rgba(255,255,255,0.03); transition: transform 0.5s ease;}
         
+        .photo-item img, .video-wrapper video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; pointer-events: none; /* Tıklamayı sarmalayıcı alacak */
+        }
         .photo-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
             transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
-            filter: brightness(0.85) grayscale(20%); /* Başlangıçta hafif karanlık ve sinematik */
+            filter: brightness(0.85) grayscale(20%);
         }
-        
-        /* Cam parlaması efekti */
-        .photo-item::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            transition: 0.7s;
-            pointer-events: none;
-        }
-
-        .photo-item:hover img {
-            transform: scale(1.05);
-            filter: brightness(1.1) grayscale(0%); /* Üzerine gelince tam renk ve aydınlık */
-        }
-
-        .photo-item:hover::after {
-            left: 200%; /* Işık huzmesi soldan sağa kayar */
-        }
-        
-        /* Resimlerin etrafına ince, zarif bir altın çerçeve belirir */
-        .photo-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border: 1px solid rgba(212, 175, 55, 0);
-            transition: border-color 0.8s ease;
-            z-index: 2;
-            pointer-events: none;
-        }
-        .photo-item:hover::before { border-color: rgba(212, 175, 55, 0.6); }
-
-        /* --- Video Alanı --- */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-        }
-        
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 oranı */
-            height: 0;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
-            border: 1px solid rgba(255,255,255,0.03);
-            transition: transform 0.5s ease;
-            background: #000;
-        }
-        
+        .photo-item:hover img { transform: scale(1.05); filter: brightness(1.1) grayscale(0%); }
         .video-wrapper:hover {
-            transform: translateY(-10px);
-            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-10px); border-color: rgba(212, 175, 55, 0.3);
             box-shadow: 0 20px 50px rgba(212, 175, 55, 0.1);
         }
 
-        .video-wrapper video {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: 0;
-            object-fit: contain; /* Videonun kesilmemesi için */
+        /* Video Play İkonu (Vitrinde) */
+        .play-overlay {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 60px; height: 60px; background: rgba(5, 5, 5, 0.6);
+            border: 2px solid var(--gold-solid); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            transition: all 0.3s ease; pointer-events: none;
         }
+        .play-overlay::after {
+            content: ''; width: 0; height: 0;
+            border-top: 12px solid transparent; border-bottom: 12px solid transparent;
+            border-left: 18px solid var(--gold-solid); margin-left: 5px;
+            transition: border-color 0.3s ease;
+        }
+        .video-wrapper:hover .play-overlay { background: var(--gold-solid); transform: translate(-50%, -50%) scale(1.1); }
+        .video-wrapper:hover .play-overlay::after { border-left-color: var(--bg-dark); }
 
-        /* --- Keyframe Animasyonları --- */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-40px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* --- LIGHTBOX (SİNEMA MODU) --- */
+        .lightbox {
+            display: none; position: fixed; z-index: 9999;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(5, 5, 5, 0.95); backdrop-filter: blur(15px);
+            opacity: 0; transition: opacity 0.4s ease;
         }
+        .lightbox.show { display: block; opacity: 1; }
         
-        @keyframes fadeInFade {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
+        .lightbox-content-wrapper {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90vw; height: 85vh; display: flex; justify-content: center; align-items: center;
+        }
+        .lightbox-content-wrapper img, .lightbox-content-wrapper video {
+            max-width: 100%; max-height: 100%; border-radius: 8px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8); border: 1px solid rgba(212, 175, 55, 0.2);
+            object-fit: contain; /* Foto ve videonun kesilmesini önler */
         }
 
-        @keyframes staggerPop {
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        /* Lightbox Butonları */
+        .close-btn {
+            position: absolute; top: 20px; right: 30px; color: var(--text-muted);
+            font-size: 40px; font-weight: 200; cursor: pointer; transition: color 0.3s; z-index: 10000;
         }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
+        .close-btn:hover { color: var(--gold-solid); }
+        
+        .nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            color: rgba(255,255,255,0.5); font-size: 50px; cursor: pointer;
+            padding: 20px; user-select: none; transition: all 0.3s ease; z-index: 10000;
         }
+        .nav-btn:hover { color: var(--gold-solid); transform: translateY(-50%) scale(1.1); }
+        .prev-btn { left: 20px; }
+        .next-btn { right: 20px; }
 
-        /* --- Footer --- */
+        /* Animasyonlar */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes staggerPop { to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* Footer */
         footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 1px solid rgba(212, 175, 55, 0.1);
-            margin-top: 80px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            position: relative;
-            overflow: hidden;
+            text-align: center; padding: 40px 20px; border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin-top: 80px; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
         }
-        
         footer span { 
-            background: var(--gold-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: var(--font-heading); 
-            font-style: italic;
-            font-weight: 700;
-            font-size: 1.2rem;
-            text-transform: none;
-            letter-spacing: 1px;
+            background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-family: var(--font-heading); font-style: italic; font-weight: 700; font-size: 1.2rem; text-transform: none;
         }
 
         /* --- Mobil Uyumluluk --- */
         @media (max-width: 768px) {
             header { padding: 4rem 1rem 2rem; }
-            .ambient-light { width: 150vw; top: -10%; }
             .photo-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; }
             .tabs { padding: 15px; gap: 20px; }
             .tab-btn { font-size: 0.8rem; letter-spacing: 1px; }
             .video-grid { grid-template-columns: 1fr; }
+            /* Mobilde ok tuşlarını biraz küçült ki ekrana girmesin */
+            .nav-btn { font-size: 35px; padding: 10px; }
+            .prev-btn { left: 5px; }
+            .next-btn { right: 5px; }
+            .lightbox-content-wrapper { width: 95vw; }
         }
     </style>
 </head>
@@ -318,95 +220,162 @@
     </div>
 
     <div class="container">
-        
         <div id="photos" class="content-section active">
-            <div class="photo-grid" id="dynamic-gallery">
-                </div>
+            <div class="photo-grid" id="dynamic-gallery"></div>
         </div>
 
         <div id="videos" class="content-section">
-            <div class="video-grid" id="dynamic-video-grid">
-                </div>
+            <div class="video-grid" id="dynamic-video-grid"></div>
         </div>
-
     </div>
 
     <footer>
         <p>Gururla Sunarız <br><br> <span>Class of '26</span></p>
     </footer>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // --- 1. FOTOĞRAF YÜKLEME ---
-            const toplamFotoSayisi = 182; 
-            const klasorYolu = 'galeri/'; 
-            const galeriDiv = document.getElementById('dynamic-gallery');
+    <div id="lightbox" class="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <span class="nav-btn prev-btn" onclick="navigate(-1)">&#10094;</span>
+        
+        <div class="lightbox-content-wrapper" id="lightbox-wrapper">
+            </div>
 
+        <span class="nav-btn next-btn" onclick="navigate(1)">&#10095;</span>
+    </div>
+
+    <script>
+        const toplamFotoSayisi = 182; 
+        const toplamVideoSayisi = 19; 
+        
+        let currentMode = 'photos'; // Hangi sekmedeyiz?
+        let currentIndex = 1;       // Kaçıncı medyadayız?
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const galeriDiv = document.getElementById('dynamic-gallery');
+            const videoDiv = document.getElementById('dynamic-video-grid');
+
+            // --- 1. FOTOĞRAFLARI OLUŞTUR ---
             for (let i = 1; i <= toplamFotoSayisi; i++) {
                 const item = document.createElement('div');
                 item.className = 'photo-item';
-                
                 const gecikme = (i * 0.05).toFixed(2); 
                 item.style.animationDelay = `${gecikme}s`;
-
-                item.innerHTML = `
-                    <img src="${klasorYolu}mezuniyet (${i}).jpeg" 
-                         alt="Mezuniyet Anısı ${i}" 
-                         loading="lazy"
-                         onerror="this.parentElement.style.display='none'"> 
-                `;
                 
+                // Tıklanınca lightbox'ı aç
+                item.onclick = () => openLightbox('photos', i);
+
+                item.innerHTML = `<img src="galeri/mezuniyet (${i}).jpeg" loading="lazy" onerror="this.parentElement.style.display='none'">`;
                 galeriDiv.appendChild(item);
             }
 
-            // --- 2. VİDEO YÜKLEME ---
-            const toplamVideoSayisi = 20; // İstediğin 20 video
-            const videoKlasoru = 'video/'; // Videoların klasör adı
-            const videoDiv = document.getElementById('dynamic-video-grid');
-
+            // --- 2. VİDEOLARI OLUŞTUR ---
             for (let i = 1; i <= toplamVideoSayisi; i++) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'video-wrapper';
-                
-                // HTML5 Video etiketi ile MP4 oynatıcı eklendi
+                const gecikme = (i * 0.1).toFixed(2); 
+                wrapper.style.animationDelay = `${gecikme}s`;
+
+                // Tıklanınca lightbox'ı aç
+                wrapper.onclick = () => openLightbox('videos', i);
+
+                // Video etiketinden 'controls' kaldırıldı ve play ikonu eklendi
                 wrapper.innerHTML = `
-                    <video controls preload="metadata">
-                        <source src="${videoKlasoru}anlar (${i}).mp4" type="video/mp4">
-                        Tarayıcınız bu videoyu desteklemiyor.
+                    <video preload="metadata">
+                        <source src="video/anlar (${i}).mp4" type="video/mp4">
                     </video>
+                    <div class="play-overlay"></div>
                 `;
-                
                 videoDiv.appendChild(wrapper);
             }
         });
 
-        // --- Gelişmiş Sekme Geçişi ---
+        // --- SEKME GEÇİŞİ ---
         function openTab(tabName, btnElement) {
-            // Aktif buton ayarı
             var buttons = document.getElementsByClassName("tab-btn");
-            for (var i = 0; i < buttons.length; i++) {
-                buttons[i].classList.remove("active");
-            }
+            for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
             btnElement.classList.add("active");
 
-            // Tüm içerikleri gizle
             var contents = document.getElementsByClassName("content-section");
-            for (var i = 0; i < contents.length; i++) {
-                contents[i].classList.remove("active");
-                
-                // Sekme değiştiğinde tüm videoları durdur (arka planda ses gelmemesi için)
-                if (tabName !== 'videos') {
-                    var videos = contents[i].getElementsByTagName('video');
-                    for(var j=0; j<videos.length; j++){
-                        videos[j].pause();
-                    }
-                }
-            }
+            for (var i = 0; i < contents.length; i++) contents[i].classList.remove("active");
 
-            // Seçileni animasyonlu göster
+            setTimeout(() => { document.getElementById(tabName).classList.add("active"); }, 50);
+        }
+
+        // --- LIGHTBOX FONKSİYONLARI ---
+        function openLightbox(mode, index) {
+            currentMode = mode;
+            currentIndex = index;
+            updateLightbox();
+            
+            const lb = document.getElementById('lightbox');
+            lb.style.display = 'block';
+            setTimeout(() => lb.classList.add('show'), 10);
+            
+            // Arka planın kaymasını engelle
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('lightbox');
+            lb.classList.remove('show');
             setTimeout(() => {
-                document.getElementById(tabName).classList.add("active");
-            }, 50);
+                lb.style.display = 'none';
+                document.getElementById('lightbox-wrapper').innerHTML = ''; // Videoyu tamamen durdur
+            }, 400);
+            
+            // Arka plan kaymasını geri aç
+            document.body.style.overflow = 'auto'; 
+        }
+
+        // Siyah alana tıklayınca da kapansın
+        document.getElementById('lightbox').addEventListener('click', function(e) {
+            if (e.target === this) closeLightbox();
+        });
+
+        // Yön tuşları
+        function navigate(step) {
+            currentIndex += step;
+            const maxIndex = currentMode === 'photos' ? toplamFotoSayisi : toplamVideoSayisi;
+            
+            // Başa veya sona döngü
+            if (currentIndex > maxIndex) currentIndex = 1;
+            if (currentIndex < 1) currentIndex = maxIndex;
+            
+            updateLightbox();
+        }
+
+        function updateLightbox() {
+            const wrapper = document.getElementById('lightbox-wrapper');
+            if (currentMode === 'photos') {
+                wrapper.innerHTML = `<img src="galeri/mezuniyet (${currentIndex}).jpeg" alt="Anı">`;
+            } else {
+                // Sadece burada 'controls' ve 'autoplay' var
+                wrapper.innerHTML = `
+                    <video controls autoplay>
+                        <source src="video/anlar (${currentIndex}).mp4" type="video/mp4">
+                    </video>
+                `;
+            }
+        }
+
+        // --- SWIPE (KAYDIRMA) DESTEĞİ (MOBİL İÇİN) ---
+        let touchstartX = 0;
+        let touchendX = 0;
+        const lightboxElement = document.getElementById('lightbox');
+
+        lightboxElement.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        lightboxElement.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const minSwipeDistance = 50; // Kaydırma hassasiyeti
+            if (touchendX < touchstartX - minSwipeDistance) navigate(1); // Sola kaydır (İleri)
+            if (touchendX > touchstartX + minSwipeDistance) navigate(-1); // Sağa kaydır (Geri)
         }
     </script>
 </body>
