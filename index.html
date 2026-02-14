@@ -2,12 +2,12 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 Mezuniyet Yıllığı - Exclusive Galeri</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
 
     <style>
         /* --- Premium Renk ve Tema Ayarları --- */
@@ -30,9 +30,9 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
-            overflow-x: hidden; /* Yatay taşmayı engelle */
+            overflow-x: hidden;
             position: relative;
-             /* Mobilde çift tıklama zoomunu engelle, biz kendimiz yöneteceğiz */
+            /* Dokunmatik gecikmelerini önler */
             touch-action: manipulation;
         }
 
@@ -50,34 +50,34 @@
 
         /* --- Başlık --- */
         header {
-            text-align: center; padding: 6rem 1rem 4rem;
+            text-align: center; padding: 5rem 1rem 3rem;
             animation: fadeInDown 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
         header h1 { 
             font-family: var(--font-heading);
-            font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 15px;
+            font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 10px;
             letter-spacing: 4px; font-weight: 700;
             background: var(--gold-gradient);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             background-size: 200% auto; animation: shine 5s linear infinite;
         }
         header p { 
-            font-size: 1.1rem; color: var(--text-muted); font-weight: 300;
+            font-size: clamp(0.9rem, 2vw, 1.1rem); color: var(--text-muted); font-weight: 300;
             letter-spacing: 1px; max-width: 600px; margin: 0 auto; text-transform: uppercase;
         }
 
         /* --- Sekmeler --- */
         .tabs {
-            display: flex; justify-content: center; gap: 40px;
-            padding: 20px; background: rgba(5, 5, 5, 0.8);
+            display: flex; justify-content: center; gap: 30px;
+            padding: 15px; background: rgba(5, 5, 5, 0.85);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
         }
         .tab-btn {
             background: transparent; border: none; color: var(--text-muted);
             font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 3px; padding: 10px 5px;
+            text-transform: uppercase; letter-spacing: 2px; padding: 10px 15px;
             cursor: pointer; position: relative; transition: all 0.4s ease;
         }
         .tab-btn::after {
@@ -86,151 +86,145 @@
             background: var(--gold-gradient); box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
             transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .tab-btn:hover { color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+        @media (hover: hover) {
+            .tab-btn:hover { color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+        }
         .tab-btn.active { color: var(--gold-solid); font-weight: 600; }
         .tab-btn.active::after { width: 100%; }
 
         /* --- İçerik Alanı --- */
-        .container { max-width: 1400px; margin: 50px auto; padding: 0 20px; min-height: 50vh; }
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 15px; min-height: 50vh; }
         .content-section { display: none; opacity: 0; }
-        .content-section.active { display: block; animation: fadeInFade 0.8s ease forwards; }
+        .content-section.active { display: block; animation: fadeInFade 0.6s ease forwards; }
 
-        /* --- Grid Tasarımları (PC DÜZELTİLDİ) --- */
+        /* --- Grid Tasarımları --- */
         .photo-grid, .video-grid {
             display: grid; 
-            /* PC'de yan yana sığdığı kadar diz */
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-            gap: 30px;
+            /* PC'de 3'lü veya 4'lü (min 300px) sığdığı kadar */
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px;
         }
         
         .photo-item, .video-wrapper {
-            position: relative; border-radius: 4px; overflow: hidden;
+            position: relative; border-radius: 6px; overflow: hidden;
             background: var(--bg-card); cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            opacity: 0; transform: translateY(30px) scale(0.95);
-            animation: staggerPop 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
             border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            /* Performans için donanımsal hızlandırma */
+            will-change: transform; 
         }
         .photo-item { aspect-ratio: 3/4; }
-        .video-wrapper { padding-bottom: 56.25%; height: 0; background: #000; }
+        .video-wrapper { aspect-ratio: 16/9; background: #000; }
         
         .photo-item img, .video-wrapper video {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover; pointer-events: none; 
+            transition: transform 0.8s ease, filter 0.5s ease;
         }
-        .photo-item img {
-            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.5s ease;
-            filter: brightness(0.9) grayscale(10%);
-        }
-        .photo-item:hover img { transform: scale(1.05); filter: brightness(1.1) grayscale(0%); }
-        .video-wrapper:hover, .photo-item:hover {
-            transform: translateY(-10px) scale(1.02); 
-            border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
-            z-index: 10;
+        
+        /* Hover Efektleri (Sadece fare destekleyen cihazlarda çalışır, mobilde takılı kalmaz) */
+        @media (hover: hover) {
+            .photo-item img { filter: brightness(0.9) grayscale(10%); }
+            .photo-item:hover img { transform: scale(1.05); filter: brightness(1.1) grayscale(0%); }
+            .video-wrapper:hover, .photo-item:hover {
+                transform: translateY(-5px); 
+                border-color: rgba(212, 175, 55, 0.4);
+                box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
+                z-index: 2;
+            }
         }
 
         /* Video Play İkonu (Vitrinde) */
         .play-overlay {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 70px; height: 70px; background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(212, 175, 55, 0.7); border-radius: 50%;
+            width: 60px; height: 60px; background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(212, 175, 55, 0.8); border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            transition: all 0.3s ease; pointer-events: none; backdrop-filter: blur(5px);
+            transition: all 0.3s ease; pointer-events: none; backdrop-filter: blur(4px);
         }
         .play-overlay::after {
-            content: ''; border-top: 14px solid transparent; border-bottom: 14px solid transparent;
-            border-left: 22px solid var(--gold-solid); margin-left: 6px; transition: all 0.3s ease;
+            content: ''; border-top: 12px solid transparent; border-bottom: 12px solid transparent;
+            border-left: 20px solid var(--gold-solid); margin-left: 6px; transition: all 0.3s ease;
         }
-        .video-wrapper:hover .play-overlay { background: var(--gold-solid); border-color: var(--gold-solid); transform: translate(-50%, -50%) scale(1.1); }
-        .video-wrapper:hover .play-overlay::after { border-left-color: var(--bg-dark); }
+        @media (hover: hover) {
+            .video-wrapper:hover .play-overlay { background: var(--gold-solid); border-color: var(--gold-solid); transform: translate(-50%, -50%) scale(1.1); }
+            .video-wrapper:hover .play-overlay::after { border-left-color: var(--bg-dark); }
+        }
 
         /* --- LIGHTBOX (SİNEMA MODU) --- */
         .lightbox {
             display: none; position: fixed; z-index: 9999;
             left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.96); /* Daha koyu arka plan */
+            background-color: rgba(0, 0, 0, 0.98);
             opacity: 0; transition: opacity 0.3s ease;
+            touch-action: none; /* Lightbox açıkken arkaplanın kaymasını engeller */
         }
         .lightbox.show { display: block; opacity: 1; }
         
         .lightbox-content-wrapper {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 100%; height: 100%; /* Tam ekran */
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%; 
             display: flex; justify-content: center; align-items: center;
-            overflow: hidden; /* Zoom yapınca taşmayı gizle */
         }
 
-        /* Zoomlanabilir görüntü stili */
         .lightbox-media {
-            max-width: 95vw; max-height: 95vh; 
+            max-width: 95vw; max-height: 90vh; 
             object-fit: contain;
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); /* Yumuşak zoom geçişi */
-            cursor: zoom-in;
-            /* Zoom yapıldığında pan (kaydırma) imkanı için */
-            transform-origin: center center;
-            will-change: transform;
+            user-select: none;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
-        /* Zoomlanmış durum */
-        .lightbox-media.zoomed {
-            transform: scale(2.5); /* 2.5 kat zoom */
-            cursor: grab;
-        }
-        .lightbox-media.zoomed:active { cursor: grabbing; }
 
         /* Lightbox Butonları */
         .close-btn {
-            position: absolute; top: 25px; right: 30px; color: #fff;
-            font-size: 45px; font-weight: 100; cursor: pointer; transition: all 0.3s; z-index: 10002;
-            line-height: 1; opacity: 0.7;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: absolute; top: 20px; right: 20px; color: #fff;
+            font-size: 40px; font-weight: 300; cursor: pointer; transition: all 0.3s; z-index: 10002;
+            line-height: 1; opacity: 0.8; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            padding: 10px;
         }
-        .close-btn:hover { color: var(--gold-solid); opacity: 1; transform: rotate(90deg); }
-        
         .nav-btn {
             position: absolute; top: 50%; transform: translateY(-50%);
-            color: #fff; font-size: 55px; cursor: pointer; font-weight: 100;
-            padding: 30px; user-select: none; transition: all 0.3s ease; z-index: 10001;
-            opacity: 0.6; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            color: #fff; font-size: 40px; cursor: pointer; font-weight: 300;
+            padding: 20px 15px; user-select: none; transition: all 0.3s ease; z-index: 10001;
+            opacity: 0.7; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.2); border-radius: 8px;
         }
-        .nav-btn:hover { color: var(--gold-solid); opacity: 1; transform: translateY(-50%) scale(1.2); }
+        @media (hover: hover) {
+            .close-btn:hover { color: var(--gold-solid); opacity: 1; transform: rotate(90deg); }
+            .nav-btn:hover { color: var(--gold-solid); opacity: 1; background: rgba(0,0,0,0.6); }
+        }
         .prev-btn { left: 10px; }
         .next-btn { right: 10px; }
 
         /* Animasyonlar */
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes staggerPop { to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes shine { to { background-position: 200% center; } }
 
         /* Footer */
         footer {
-            text-align: center; padding: 50px 20px; border-top: 1px solid rgba(212, 175, 55, 0.2);
-            margin-top: 100px; color: var(--text-muted); font-size: 0.9rem; letter-spacing: 3px; text-transform: uppercase;
-            background: linear-gradient(to bottom, var(--bg-dark), #000);
+            text-align: center; padding: 40px 20px; border-top: 1px solid rgba(212, 175, 55, 0.15);
+            margin-top: 60px; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+            background: linear-gradient(to bottom, transparent, #000);
         }
         footer span { 
             background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-family: var(--font-heading); font-style: italic; font-weight: 700; font-size: 1.4rem; text-transform: none;
+            font-family: var(--font-heading); font-style: italic; font-weight: 700; font-size: 1.3rem; text-transform: none;
         }
 
         /* --- Mobil Uyumluluk --- */
-        @media (max-width: 992px) {
-             /* Tablet ve küçük PC'ler için ızgara ayarı */
-            .photo-grid, .video-grid { grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;}
-        }
         @media (max-width: 768px) {
-            header { padding: 5rem 1rem 3rem; }
-            header h1 { font-size: 3rem; }
-            /* Mobilde tek veya iki sütun */
-            .photo-grid, .video-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
-            .tabs { padding: 15px; gap: 15px; backdrop-filter: blur(10px); }
-            .tab-btn { font-size: 0.85rem; letter-spacing: 1px; padding: 8px; }
+            header { padding: 4rem 1rem 2rem; }
+            /* Mobilde tam 2 Sütun */
+            .photo-grid, .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .tabs { padding: 10px; gap: 15px; }
+            .tab-btn { font-size: 0.8rem; padding: 8px; letter-spacing: 1px; }
             
-            /* Mobilde ok tuşlarını gizle, sadece swipe kullanılsın */
-            .nav-btn { display: none; }
-            .close-btn { top: 15px; right: 15px; font-size: 35px; }
+            /* Butonları mobilde görünür yap, boyutlarını dokunmaya uygun ayarla */
+            .nav-btn { font-size: 30px; padding: 15px 10px; opacity: 0.9; background: rgba(0,0,0,0.4); }
+            .prev-btn { left: 5px; }
+            .next-btn { right: 5px; }
+            .close-btn { top: 10px; right: 10px; font-size: 35px; background: rgba(0,0,0,0.4); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;}
         }
     </style>
 </head>
@@ -264,21 +258,19 @@
 
     <div id="lightbox" class="lightbox">
         <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <span class="nav-btn prev-btn" onclick="navigate(-1)">&#10094;</span>
+        <span class="nav-btn prev-btn" onclick="navigate(-1, event)">&#10094;</span>
         
-        <div class="lightbox-content-wrapper" id="lightbox-wrapper">
-            </div>
+        <div class="lightbox-content-wrapper" id="lightbox-wrapper"></div>
 
-        <span class="nav-btn next-btn" onclick="navigate(1)">&#10095;</span>
+        <span class="nav-btn next-btn" onclick="navigate(1, event)">&#10095;</span>
     </div>
 
     <script>
         const toplamFotoSayisi = 182; 
-        const toplamVideoSayisi = 17; // Video sayısı güncellendi
+        const toplamVideoSayisi = 17; 
         
         let currentMode = 'photos';
         let currentIndex = 1;
-        let lastTapTime = 0; // Çift tıklama için zamanlayıcı
 
         document.addEventListener("DOMContentLoaded", function() {
             const galeriDiv = document.getElementById('dynamic-gallery');
@@ -288,10 +280,8 @@
             for (let i = 1; i <= toplamFotoSayisi; i++) {
                 const item = document.createElement('div');
                 item.className = 'photo-item';
-                const gecikme = (i * 0.03).toFixed(2); 
-                item.style.animationDelay = `${gecikme}s`;
                 item.onclick = () => openLightbox('photos', i);
-                item.innerHTML = `<img src="galeri/mezuniyet (${i}).jpeg" loading="lazy" onerror="this.parentElement.style.display='none'">`;
+                item.innerHTML = `<img src="galeri/mezuniyet (${i}).jpeg" loading="lazy" alt="Mezuniyet Fotoğrafı ${i}" onerror="this.parentElement.style.display='none'">`;
                 galeriDiv.appendChild(item);
             }
 
@@ -299,12 +289,13 @@
             for (let i = 1; i <= toplamVideoSayisi; i++) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'video-wrapper';
-                const gecikme = (i * 0.08).toFixed(2); 
-                wrapper.style.animationDelay = `${gecikme}s`;
                 wrapper.onclick = () => openLightbox('videos', i);
-                // Vitrinde controls yok, play ikonu var
+                
+                // #t=0.001 hack'i ile videonun ilk karesi yüklenir, siyah ekran önlenir.
                 wrapper.innerHTML = `
-                    <video preload="metadata"><source src="video/anlar (${i}).mp4" type="video/mp4"></video>
+                    <video preload="metadata" muted playsinline>
+                        <source src="video/anlar (${i}).mp4#t=0.001" type="video/mp4">
+                    </video>
                     <div class="play-overlay"></div>
                 `;
                 videoDiv.appendChild(wrapper);
@@ -321,11 +312,12 @@
 
         // --- SEKME GEÇİŞİ ---
         function openTab(tabName, btnElement) {
-            var buttons = document.getElementsByClassName("tab-btn");
-            for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove("active");
+            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
             btnElement.classList.add("active");
-            var contents = document.getElementsByClassName("content-section");
-            for (var i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+            
+            document.querySelectorAll(".content-section").forEach(sec => sec.classList.remove("active"));
+            
+            // Küçük bir gecikme animasyonun yeniden tetiklenmesini sağlar
             setTimeout(() => { document.getElementById(tabName).classList.add("active"); }, 50);
         }
 
@@ -334,6 +326,7 @@
             currentMode = mode;
             currentIndex = index;
             updateLightbox();
+            
             const lb = document.getElementById('lightbox');
             lb.style.display = 'block';
             setTimeout(() => lb.classList.add('show'), 10);
@@ -343,6 +336,8 @@
         function closeLightbox() {
             const lb = document.getElementById('lightbox');
             lb.classList.remove('show');
+            
+            // Arka planda video çalıyorsa sesini kesmek ve durdurmak için wrapper'ı temizle
             setTimeout(() => {
                 lb.style.display = 'none';
                 document.getElementById('lightbox-wrapper').innerHTML = '';
@@ -350,135 +345,63 @@
             document.body.style.overflow = 'auto'; 
         }
 
-        // Siyah alana tıklayınca kapanma (Sadece zoom yapılmamışsa)
+        // Arka plandaki siyah alana (fotoğraf dışına) tıklayınca kapat
         document.getElementById('lightbox-wrapper').addEventListener('click', function(e) {
             if (e.target === this) closeLightbox();
         });
 
         // Yön tuşları fonksiyonu
-        function navigate(step) {
+        function navigate(step, event) {
+            if(event) event.stopPropagation(); // Butona tıklayınca arka plan tıklanmasını (kapanmayı) engelle
+            
             currentIndex += step;
             const maxIndex = currentMode === 'photos' ? toplamFotoSayisi : toplamVideoSayisi;
+            
             if (currentIndex > maxIndex) currentIndex = 1;
             if (currentIndex < 1) currentIndex = maxIndex;
+            
             updateLightbox();
         }
 
-        // Lightbox içeriğini güncelle ve ZOOM olaylarını ekle
+        // Lightbox içeriğini güncelle
         function updateLightbox() {
             const wrapper = document.getElementById('lightbox-wrapper');
-            wrapper.innerHTML = ''; // Önceki içeriği temizle
+            wrapper.innerHTML = ''; 
             
             let mediaElement;
             if (currentMode === 'photos') {
                 mediaElement = document.createElement('img');
                 mediaElement.src = `galeri/mezuniyet (${currentIndex}).jpeg`;
                 mediaElement.className = 'lightbox-media';
-                mediaElement.alt = 'Anı';
-                // Sadece fotolarda zoom aktif
-                attachZoomListeners(mediaElement);
+                mediaElement.alt = `Görsel ${currentIndex}`;
             } else {
                 mediaElement = document.createElement('video');
                 mediaElement.src = `video/anlar (${currentIndex}).mp4`;
                 mediaElement.className = 'lightbox-media';
                 mediaElement.controls = true;
                 mediaElement.autoplay = true;
-                // Videolarda zoom kapatıldı, native player kullanılsın
-                mediaElement.style.cursor = 'default';
+                mediaElement.playsinline = true; // Mobilde tam ekrana fırlamayı engeller
             }
             wrapper.appendChild(mediaElement);
-        }
-
-        // --- ZOOM İŞLEVİ (PC: Tıkla / Mobil: Çift Tıkla) ---
-        function attachZoomListeners(element) {
-            // PC için Tıklama ve Mobil için Çift Tıklama Algılama
-            element.addEventListener('click', function(e) {
-                const currentTime = new Date().getTime();
-                const tapLength = currentTime - lastTapTime;
-                
-                // Mobilde çift tıklama (300ms içinde 2. tık) VEYA PC'de tek tıklama
-                const isMobile = window.innerWidth <= 768;
-                if ((isMobile && tapLength < 300 && tapLength > 0) || (!isMobile)) {
-                    this.classList.toggle('zoomed');
-                    if (this.classList.contains('zoomed')) {
-                        this.style.cursor = 'grab';
-                        enableDrag(this);
-                    } else {
-                        this.style.cursor = 'zoom-in';
-                        disableDrag(this);
-                         // Zoom çıkışı merkeze sıfırla
-                         this.style.transform = '';
-                    }
-                    e.preventDefault(); // Standart davranışı engelle
-                }
-                lastTapTime = currentTime;
-            });
-        }
-        
-        // --- ZOOM DRAG (SÜRÜKLEME) ---
-        let isDragging = false;
-        let startX, startY, translateX = 0, translateY = 0;
-
-        function enableDrag(element) {
-            element.addEventListener('mousedown', startDrag);
-            element.addEventListener('touchstart', startDrag, {passive: false});
-            window.addEventListener('mousemove', drag);
-            window.addEventListener('touchmove', drag, {passive: false});
-            window.addEventListener('mouseup', endDrag);
-            window.addEventListener('touchend', endDrag);
-        }
-        function disableDrag(element) {
-             // Event listenerları temizle (Basitleştirilmiş)
-             // Not: Tam temizlik için named function kullanmak gerekir ama bu senaryoda 
-             // zoom class'ı kalktığı için sorun yaratmaz.
-             isDragging = false;
-        }
-
-        function startDrag(e) {
-            if (!this.classList.contains('zoomed')) return;
-            isDragging = true;
-            this.style.cursor = 'grabbing';
-            startX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-            startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-            e.preventDefault();
-        }
-
-        function drag(e) {
-            if (!isDragging) return;
-            const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-            const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-            const deltaX = clientX - startX;
-            const deltaY = clientY - startY;
-            translateX += deltaX;
-            translateY += deltaY;
-            // Zoom ölçeğini koruyarak taşı (scale 2.5)
-            document.querySelector('.lightbox-media.zoomed').style.transform = `scale(2.5) translate(${translateX/2.5}px, ${translateY/2.5}px)`;
-            startX = clientX;
-            startY = clientY;
-             if(e.type.includes('touch')) e.preventDefault();
-        }
-
-        function endDrag() {
-            if (isDragging) {
-                isDragging = false;
-                const zoomedEl = document.querySelector('.lightbox-media.zoomed');
-                if(zoomedEl) zoomedEl.style.cursor = 'grab';
-            }
         }
 
         // --- SWIPE (KAYDIRMA) DESTEĞİ (MOBİL İÇİN) ---
         let touchstartX = 0; let touchendX = 0;
         const lightboxElement = document.getElementById('lightbox');
-        lightboxElement.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; }, {passive: true});
+        
+        lightboxElement.addEventListener('touchstart', e => { 
+            touchstartX = e.changedTouches[0].screenX; 
+        }, {passive: true});
+        
         lightboxElement.addEventListener('touchend', e => { 
             touchendX = e.changedTouches[0].screenX; 
-            // Eğer zoom yapılmamışsa swipe'a izin ver
-            if(!document.querySelector('.lightbox-media.zoomed')) handleSwipe();
+            handleSwipe();
         }, {passive: true});
 
         function handleSwipe() {
-            if (touchendX < touchstartX - 50) navigate(1);
-            if (touchendX > touchstartX + 50) navigate(-1);
+            // Ekranda yeterince kaydırma yapıldıysa çalış (50px hassasiyet)
+            if (touchendX < touchstartX - 50) navigate(1); // Sola kaydır (İleri)
+            if (touchendX > touchstartX + 50) navigate(-1); // Sağa kaydır (Geri)
         }
     </script>
 </body>
