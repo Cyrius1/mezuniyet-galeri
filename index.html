@@ -2,407 +2,993 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 Mezuniyet Yıllığı - Exclusive Galeri</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BFL'26 — Mezuniyet Galerisi</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* --- Premium Renk ve Tema Ayarları --- */
+        /* ─── DESIGN TOKENS ─────────────────────────────────────────────── */
         :root {
-            --bg-dark: #050505;
-            --bg-card: #0f0f0f;
-            --gold-gradient: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
-            --gold-solid: #d4af37;
-            --text-main: #fcfcfc;
-            --text-muted: #888888;
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Montserrat', sans-serif;
+            --black:      #040404;
+            --surface:    #0a0a0a;
+            --card:       #0e0e0e;
+            --gold:       #d4af37;
+            --gold-light: #f0d060;
+            --gold-dim:   #8a6f1e;
+            --white:      #f8f6f0;
+            --muted:      #5a5a5a;
+            --border:     rgba(212, 175, 55, 0.12);
+            --glass-bg:   rgba(8, 8, 8, 0.72);
+            --glass-blur: 24px;
+
+            --gold-gradient: linear-gradient(
+                135deg,
+                #aa8520 0%,
+                #e8c84a 30%,
+                #fdf1a0 50%,
+                #d4af37 70%,
+                #8a6514 100%
+            );
+
+            --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+            --font-display: 'Cormorant Garamond', Georgia, serif;
+            --font-body:    'DM Sans', -apple-system, sans-serif;
         }
 
-        /* --- Genel Ayarlar --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        /* ─── RESET & BASE ───────────────────────────────────────────────── */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
         body {
             font-family: var(--font-body);
-            background-color: var(--bg-dark);
-            color: var(--text-main);
+            background-color: var(--black);
+            color: var(--white);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
-            /* Dokunmatik gecikmelerini önler */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             touch-action: manipulation;
         }
 
-        .ambient-light {
-            position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
-            width: 80vw; height: 50vh;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(5, 5, 5, 0) 70%);
-            z-index: -1; pointer-events: none;
+        /* Grain overlay for luxury texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold-solid); }
-
-        /* --- Başlık --- */
-        header {
-            text-align: center; padding: 5rem 1rem 3rem;
-            animation: fadeInDown 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        /* Ambient gold glow at top */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -40vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 80vh;
+            background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.07) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 0;
         }
-        header h1 { 
-            font-family: var(--font-heading);
-            font-size: clamp(2.5rem, 6vw, 5rem); margin-bottom: 10px;
-            letter-spacing: 4px; font-weight: 700;
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 10px; }
+
+        /* ─── HEADER ─────────────────────────────────────────────────────── */
+        .site-header {
+            position: relative;
+            z-index: 1;
+            padding: clamp(4rem, 10vw, 7rem) 1.5rem clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            animation: headerReveal 1.8s var(--ease-out) both;
+        }
+
+        .header-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 400;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .header-title {
+            font-family: var(--font-display);
+            font-size: clamp(4.5rem, 14vw, 10rem);
+            font-weight: 300;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
             background: var(--gold-gradient);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            background-size: 200% auto; animation: shine 5s linear infinite;
-        }
-        header p { 
-            font-size: clamp(0.9rem, 2vw, 1.1rem); color: var(--text-muted); font-weight: 300;
-            letter-spacing: 1px; max-width: 600px; margin: 0 auto; text-transform: uppercase;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% 300%;
+            animation: shimmer 8s ease-in-out infinite;
+            margin-bottom: 1.2rem;
         }
 
-        /* --- Sekmeler --- */
-        .tabs {
-            display: flex; justify-content: center; gap: 30px;
-            padding: 15px; background: rgba(5, 5, 5, 0.85);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+        .header-subtitle {
+            font-family: var(--font-display);
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-style: italic;
+            font-weight: 300;
+            color: var(--muted);
+            letter-spacing: 0.08em;
         }
+
+        .header-line {
+            width: 60px;
+            height: 1px;
+            background: var(--gold-gradient);
+            margin: 2rem auto 0;
+            opacity: 0.6;
+        }
+
+        /* ─── NAVIGATION / TABS ──────────────────────────────────────────── */
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            padding: 14px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            /* Pill container */
+        }
+
+        /* Gold line at very top of nav */
+        .nav-sticky::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 1px;
+            background: var(--gold-gradient);
+            opacity: 0.5;
+        }
+
+        .tab-pill {
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 100px;
+            padding: 4px;
+            gap: 4px;
+        }
+
         .tab-btn {
-            background: transparent; border: none; color: var(--text-muted);
-            font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 2px; padding: 10px 15px;
-            cursor: pointer; position: relative; transition: all 0.4s ease;
+            position: relative;
+            background: transparent;
+            border: none;
+            color: var(--muted);
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 9px 28px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: color 0.35s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
-        .tab-btn::after {
-            content: ''; position: absolute; bottom: 0; left: 50%;
-            transform: translateX(-50%); width: 0; height: 2px;
-            background: var(--gold-gradient); box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-            transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        @media (hover: hover) {
-            .tab-btn:hover { color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
-        }
-        .tab-btn.active { color: var(--gold-solid); font-weight: 600; }
-        .tab-btn.active::after { width: 100%; }
 
-        /* --- İçerik Alanı --- */
-        .container { max-width: 1400px; margin: 40px auto; padding: 0 15px; min-height: 50vh; }
-        .content-section { display: none; opacity: 0; }
-        .content-section.active { display: block; animation: fadeInFade 0.6s ease forwards; }
+        .tab-btn.active {
+            color: var(--black);
+            background: var(--gold-gradient);
+            background-size: 200% 200%;
+            animation: shimmer 6s ease-in-out infinite;
+            box-shadow: 0 2px 20px rgba(212, 175, 55, 0.35);
+        }
 
-        /* --- Grid Tasarımları --- */
-        .photo-grid, .video-grid {
-            display: grid; 
-            /* PC'de 3'lü veya 4'lü (min 300px) sığdığı kadar */
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 20px;
+        /* Count badges */
+        .tab-btn .count {
+            display: inline-block;
+            font-size: 0.6rem;
+            opacity: 0.6;
+            margin-left: 6px;
+            vertical-align: middle;
         }
-        
-        .photo-item, .video-wrapper {
-            position: relative; border-radius: 6px; overflow: hidden;
-            background: var(--bg-card); cursor: pointer;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
-            border: 1px solid rgba(255,255,255,0.05);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-            /* Performans için donanımsal hızlandırma */
-            will-change: transform; 
+
+        /* ─── MAIN CONTAINER ─────────────────────────────────────────────── */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: clamp(20px, 4vw, 40px) clamp(12px, 3vw, 30px) 80px;
         }
-        .photo-item { aspect-ratio: 3/4; }
-        .video-wrapper { aspect-ratio: 16/9; background: #000; }
-        
-        .photo-item img, .video-wrapper video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; pointer-events: none; 
-            transition: transform 0.8s ease, filter 0.5s ease;
+
+        /* ─── CONTENT SECTIONS ───────────────────────────────────────────── */
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+
+        /* ─── PHOTO GRID ─────────────────────────────────────────────────── */
+        .photo-grid {
+            display: grid;
+            /* Mobile first: 2 columns */
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(6px, 1.5vw, 14px);
         }
-        
-        /* Hover Efektleri (Sadece fare destekleyen cihazlarda çalışır, mobilde takılı kalmaz) */
+
+        /* Tablet: 3 columns */
+        @media (min-width: 640px) {
+            .photo-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Desktop: 4 columns */
+        @media (min-width: 1024px) {
+            .photo-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        /* ─── VIDEO GRID ─────────────────────────────────────────────────── */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: clamp(6px, 1.5vw, 14px);
+        }
+
+        @media (min-width: 640px) {
+            .video-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .video-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* ─── PHOTO ITEM ─────────────────────────────────────────────────── */
+        .photo-item {
+            position: relative;
+            aspect-ratio: 3/4;
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--card);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            /* GPU composite layer */
+            transform: translateZ(0);
+            will-change: transform;
+            /* Content-visibility for 180+ items performance */
+            content-visibility: auto;
+            contain-intrinsic-size: auto 400px;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .photo-item img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* GPU accelerated scale */
+            transform: scale(1) translateZ(0);
+            transition: transform 0.7s var(--ease-out), opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .photo-item img.loaded { opacity: 1; }
+
+        /* Subtle gold shimmer on hover — desktop only */
+        .photo-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(212, 175, 55, 0.18) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
         @media (hover: hover) {
-            .photo-item img { filter: brightness(0.9) grayscale(10%); }
-            .photo-item:hover img { transform: scale(1.05); filter: brightness(1.1) grayscale(0%); }
-            .video-wrapper:hover, .photo-item:hover {
-                transform: translateY(-5px); 
-                border-color: rgba(212, 175, 55, 0.4);
-                box-shadow: 0 15px 30px rgba(212, 175, 55, 0.15);
+            .photo-item:hover img {
+                transform: scale(1.06) translateZ(0);
+            }
+            .photo-item:hover::after { opacity: 1; }
+            .photo-item:hover {
+                border-color: rgba(212, 175, 55, 0.3);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7),
+                            0 0 0 1px rgba(212, 175, 55, 0.15);
                 z-index: 2;
             }
         }
 
-        /* Video Play İkonu (Vitrinde) */
-        .play-overlay {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 60px; height: 60px; background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(212, 175, 55, 0.8); border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            transition: all 0.3s ease; pointer-events: none; backdrop-filter: blur(4px);
-        }
-        .play-overlay::after {
-            content: ''; border-top: 12px solid transparent; border-bottom: 12px solid transparent;
-            border-left: 20px solid var(--gold-solid); margin-left: 6px; transition: all 0.3s ease;
-        }
-        @media (hover: hover) {
-            .video-wrapper:hover .play-overlay { background: var(--gold-solid); border-color: var(--gold-solid); transform: translate(-50%, -50%) scale(1.1); }
-            .video-wrapper:hover .play-overlay::after { border-left-color: var(--bg-dark); }
+        /* Index badge */
+        .photo-item .badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.35);
+            pointer-events: none;
+            font-variant-numeric: tabular-nums;
         }
 
-        /* --- LIGHTBOX (SİNEMA MODU) --- */
-        .lightbox {
-            display: none; position: fixed; z-index: 9999;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.98);
-            opacity: 0; transition: opacity 0.3s ease;
-            touch-action: none; /* Lightbox açıkken arkaplanın kaymasını engeller */
+        /* ─── VIDEO ITEM ─────────────────────────────────────────────────── */
+        .video-wrapper {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #000;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transform: translateZ(0);
+            will-change: transform;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
-        .lightbox.show { display: block; opacity: 1; }
-        
-        .lightbox-content-wrapper {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%; 
-            display: flex; justify-content: center; align-items: center;
+
+        .video-wrapper video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            transform: translateZ(0);
+        }
+
+        /* Glass play button */
+        .play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 100%);
+            transition: background 0.3s ease;
+            pointer-events: none;
+        }
+
+        .play-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(212, 175, 55, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.35s var(--ease-spring), border-color 0.3s ease, background 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        .play-icon svg {
+            width: 18px;
+            height: 18px;
+            margin-left: 3px;
+            fill: var(--gold);
+            transition: fill 0.3s ease;
+        }
+
+        .video-label {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media (hover: hover) {
+            .video-wrapper:hover .play-icon {
+                transform: scale(1.12);
+                background: rgba(212, 175, 55, 0.2);
+                border-color: var(--gold);
+            }
+            .video-wrapper:hover .play-icon svg { fill: var(--gold-light); }
+            .video-wrapper:hover {
+                border-color: rgba(212, 175, 55, 0.3);
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            }
+        }
+
+        /* ─── LIGHTBOX ───────────────────────────────────────────────────── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(2, 2, 2, 0.97);
+            opacity: 0;
+            transition: opacity 0.28s ease;
+            touch-action: none;
+            -webkit-overflow-scrolling: none;
+            overflow: hidden;
+        }
+
+        .lightbox.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.visible { opacity: 1; }
+
+        /* Media area */
+        .lightbox-stage {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .lightbox-media {
-            max-width: 95vw; max-height: 90vh; 
+            max-width: 90vw;
+            max-height: 86vh;
             object-fit: contain;
+            border-radius: 4px;
             user-select: none;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            animation: mediaReveal 0.35s var(--ease-out) both;
         }
 
-        /* Lightbox Butonları */
-        .close-btn {
-            position: absolute; top: 20px; right: 20px; color: #fff;
-            font-size: 40px; font-weight: 300; cursor: pointer; transition: all 0.3s; z-index: 10002;
-            line-height: 1; opacity: 0.8; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-            padding: 10px;
+        @media (max-width: 640px) {
+            .lightbox-media { max-width: 100vw; max-height: 80vh; border-radius: 0; }
         }
-        .nav-btn {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            color: #fff; font-size: 40px; cursor: pointer; font-weight: 300;
-            padding: 20px 15px; user-select: none; transition: all 0.3s ease; z-index: 10001;
-            opacity: 0.7; text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-            background: rgba(0,0,0,0.2); border-radius: 8px;
+
+        /* Close */
+        .lb-close {
+            position: absolute;
+            top: max(20px, env(safe-area-inset-top, 20px));
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: rgba(255,255,255,0.8);
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s var(--ease-spring), border-color 0.3s ease, color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
+
+        .lb-close:hover { transform: rotate(90deg) scale(1.05); border-color: var(--gold); color: var(--gold); }
+
+        /* Counter */
+        .lb-counter {
+            position: absolute;
+            top: max(26px, env(safe-area-inset-top, 26px));
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-body);
+            font-size: 0.68rem;
+            font-weight: 400;
+            letter-spacing: 0.2em;
+            color: var(--muted);
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .lb-counter .current-num {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* Nav arrows */
+        .lb-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(12, 12, 12, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .lb-nav.prev { left: 16px; border-radius: 6px; }
+        .lb-nav.next { right: 16px; border-radius: 6px; }
+
+        @media (max-width: 640px) {
+            .lb-nav { width: 40px; height: 60px; }
+            .lb-nav.prev { left: 8px; }
+            .lb-nav.next { right: 8px; }
+        }
+
         @media (hover: hover) {
-            .close-btn:hover { color: var(--gold-solid); opacity: 1; transform: rotate(90deg); }
-            .nav-btn:hover { color: var(--gold-solid); opacity: 1; background: rgba(0,0,0,0.6); }
+            .lb-nav:hover { 
+                color: var(--gold); 
+                border-color: rgba(212, 175, 55, 0.4); 
+                background: rgba(20, 20, 20, 0.9);
+            }
+            .lb-nav.prev:hover { transform: translateY(-50%) translateX(-2px); }
+            .lb-nav.next:hover { transform: translateY(-50%) translateX(2px); }
         }
-        .prev-btn { left: 10px; }
-        .next-btn { right: 10px; }
 
-        /* Animasyonlar */
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInFade { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes shine { to { background-position: 200% center; } }
+        /* Gold line at bottom of lightbox */
+        .lb-gold-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gold-gradient);
+            opacity: 0.2;
+        }
 
-        /* Footer */
+        /* ─── FOOTER ─────────────────────────────────────────────────────── */
         footer {
-            text-align: center; padding: 40px 20px; border-top: 1px solid rgba(212, 175, 55, 0.15);
-            margin-top: 60px; color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
-            background: linear-gradient(to bottom, transparent, #000);
-        }
-        footer span { 
-            background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-family: var(--font-heading); font-style: italic; font-weight: 700; font-size: 1.3rem; text-transform: none;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 20px max(40px, env(safe-area-inset-bottom, 40px));
+            border-top: 1px solid var(--border);
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
         }
 
-        /* --- Mobil Uyumluluk --- */
-        @media (max-width: 768px) {
-            header { padding: 4rem 1rem 2rem; }
-            /* Mobilde tam 2 Sütun */
-            .photo-grid, .video-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .tabs { padding: 10px; gap: 15px; }
-            .tab-btn { font-size: 0.8rem; padding: 8px; letter-spacing: 1px; }
-            
-            /* Butonları mobilde görünür yap, boyutlarını dokunmaya uygun ayarla */
-            .nav-btn { font-size: 30px; padding: 15px 10px; opacity: 0.9; background: rgba(0,0,0,0.4); }
-            .prev-btn { left: 5px; }
-            .next-btn { right: 5px; }
-            .close-btn { top: 10px; right: 10px; font-size: 35px; background: rgba(0,0,0,0.4); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;}
+        .footer-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-style: italic;
+            font-weight: 300;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: shimmer 6s ease-in-out infinite;
+            margin-bottom: 12px;
+        }
+
+        .footer-tagline {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ─── LOADING SKELETON ───────────────────────────────────────────── */
+        .photo-item.skeleton {
+            background: linear-gradient(
+                90deg,
+                var(--card) 25%,
+                rgba(255, 255, 255, 0.03) 50%,
+                var(--card) 75%
+            );
+            background-size: 200% 100%;
+            animation: skeleton-wave 2s ease infinite;
+        }
+
+        /* ─── SECTION HEADER ─────────────────────────────────────────────── */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: clamp(16px, 3vw, 28px);
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(255,255,255,0.4);
+            white-space: nowrap;
+        }
+
+        .section-header-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border), transparent);
+        }
+
+        /* ─── KEYFRAMES ──────────────────────────────────────────────────── */
+        @keyframes headerReveal {
+            from { opacity: 0; transform: translateY(-24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes mediaReveal {
+            from { opacity: 0; transform: scale(0.96); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes skeleton-wave {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* ─── UTILITY ────────────────────────────────────────────────────── */
+        .visually-hidden {
+            position: absolute; width: 1px; height: 1px;
+            overflow: hidden; clip: rect(0 0 0 0);
         }
     </style>
 </head>
 <body>
 
-    <div class="ambient-light"></div>
-
-    <header>
-        <h1>BFL'26</h1>
-        <p>Geleceğe Bırakılan Altın İzler</p>
+    <!-- ─── HEADER ──────────────────────────────────────────────────────────── -->
+    <header class="site-header" role="banner">
+        <p class="header-eyebrow">Mezuniyet Yıllığı &mdash; 2026</p>
+        <h1 class="header-title">BFL'26</h1>
+        <p class="header-subtitle">Geleceğe Bırakılan Altın İzler</p>
+        <div class="header-line" aria-hidden="true"></div>
     </header>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openTab('photos', this)">Kareler</button>
-        <button class="tab-btn" onclick="openTab('videos', this)">Anlar</button>
-    </div>
-
-    <div class="container">
-        <div id="photos" class="content-section active">
-            <div class="photo-grid" id="dynamic-gallery"></div>
+    <!-- ─── NAV ─────────────────────────────────────────────────────────────── -->
+    <nav class="nav-sticky" role="tablist" aria-label="Galeri sekmeleri">
+        <div class="tab-pill">
+            <button
+                class="tab-btn active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="photos"
+                id="tab-photos"
+                onclick="openTab('photos', this)"
+            >
+                Kareler<span class="count">182</span>
+            </button>
+            <button
+                class="tab-btn"
+                role="tab"
+                aria-selected="false"
+                aria-controls="videos"
+                id="tab-videos"
+                onclick="openTab('videos', this)"
+            >
+                Anlar<span class="count">17</span>
+            </button>
         </div>
+    </nav>
 
-        <div id="videos" class="content-section">
-            <div class="video-grid" id="dynamic-video-grid"></div>
-        </div>
-    </div>
+    <!-- ─── MAIN ─────────────────────────────────────────────────────────────── -->
+    <main class="container">
 
-    <footer>
-        <p>Gururla Sunarız <br><br> <span>BFL'26</span></p>
+        <!-- Photos -->
+        <section
+            id="photos"
+            class="content-section active"
+            role="tabpanel"
+            aria-labelledby="tab-photos"
+        >
+            <div class="section-header">
+                <h2>Kareler</h2>
+                <div class="section-header-line" aria-hidden="true"></div>
+            </div>
+            <div class="photo-grid" id="photo-grid" role="list"></div>
+        </section>
+
+        <!-- Videos -->
+        <section
+            id="videos"
+            class="content-section"
+            role="tabpanel"
+            aria-labelledby="tab-videos"
+        >
+            <div class="section-header">
+                <h2>Anlar</h2>
+                <div class="section-header-line" aria-hidden="true"></div>
+            </div>
+            <div class="video-grid" id="video-grid" role="list"></div>
+        </section>
+
+    </main>
+
+    <!-- ─── FOOTER ───────────────────────────────────────────────────────────── -->
+    <footer role="contentinfo">
+        <p class="footer-title">BFL'26</p>
+        <p class="footer-tagline">Gururla Sunarız</p>
     </footer>
 
-    <div id="lightbox" class="lightbox">
-        <span class="close-btn" onclick="closeLightbox()">&times;</span>
-        <span class="nav-btn prev-btn" onclick="navigate(-1, event)">&#10094;</span>
-        
-        <div class="lightbox-content-wrapper" id="lightbox-wrapper"></div>
+    <!-- ─── LIGHTBOX ─────────────────────────────────────────────────────────── -->
+    <div
+        id="lightbox"
+        class="lightbox"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Medya görüntüleyici"
+    >
+        <div class="lightbox-stage" id="lb-stage">
+            <!-- Counter -->
+            <div class="lb-counter" id="lb-counter" aria-live="polite">
+                <span class="current-num" id="lb-current">1</span>
+                <span>&thinsp;/&thinsp;</span>
+                <span id="lb-total">182</span>
+            </div>
 
-        <span class="nav-btn next-btn" onclick="navigate(1, event)">&#10095;</span>
+            <!-- Close -->
+            <button
+                class="lb-close"
+                onclick="closeLightbox()"
+                aria-label="Kapat"
+            >&#215;</button>
+
+            <!-- Media container -->
+            <div id="lb-media-wrap" onclick="handleStageClick(event)"></div>
+
+            <!-- Prev -->
+            <button
+                class="lb-nav prev"
+                onclick="navigate(-1)"
+                aria-label="Önceki"
+            >
+                <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 1L1 9L9 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <!-- Next -->
+            <button
+                class="lb-nav next"
+                onclick="navigate(1)"
+                aria-label="Sonraki"
+            >
+                <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 1L9 9L1 17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+
+            <div class="lb-gold-line" aria-hidden="true"></div>
+        </div>
     </div>
 
+    <!-- ─── JAVASCRIPT ────────────────────────────────────────────────────────── -->
     <script>
-        const toplamFotoSayisi = 182; 
-        const toplamVideoSayisi = 17; 
-        
-        let currentMode = 'photos';
-        let currentIndex = 1;
+    (function() {
+        'use strict';
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const galeriDiv = document.getElementById('dynamic-gallery');
-            const videoDiv = document.getElementById('dynamic-video-grid');
+        // ── Config ──────────────────────────────────────────────────────────
+        const PHOTO_COUNT = 182;
+        const VIDEO_COUNT = 17;
+        const SWIPE_THRESHOLD = 50;
 
-            // --- 1. FOTOĞRAFLARI OLUŞTUR ---
-            for (let i = 1; i <= toplamFotoSayisi; i++) {
-                const item = document.createElement('div');
-                item.className = 'photo-item';
-                item.onclick = () => openLightbox('photos', i);
-                item.innerHTML = `<img src="galeri/mezuniyet (${i}).jpeg" loading="lazy" alt="Mezuniyet Fotoğrafı ${i}" onerror="this.parentElement.style.display='none'">`;
-                galeriDiv.appendChild(item);
-            }
+        // ── State ────────────────────────────────────────────────────────────
+        let mode  = 'photos';
+        let index = 1;
 
-            // --- 2. VİDEOLARI OLUŞTUR ---
-            for (let i = 1; i <= toplamVideoSayisi; i++) {
-                const wrapper = document.createElement('div');
-                wrapper.className = 'video-wrapper';
-                wrapper.onclick = () => openLightbox('videos', i);
-                
-                // #t=0.001 hack'i ile videonun ilk karesi yüklenir, siyah ekran önlenir.
-                wrapper.innerHTML = `
-                    <video preload="metadata" muted playsinline>
-                        <source src="video/anlar (${i}).mp4#t=0.001" type="video/mp4">
-                    </video>
-                    <div class="play-overlay"></div>
-                `;
-                videoDiv.appendChild(wrapper);
-            }
+        // ── DOM refs ─────────────────────────────────────────────────────────
+        const photoGrid   = document.getElementById('photo-grid');
+        const videoGrid   = document.getElementById('video-grid');
+        const lightbox    = document.getElementById('lightbox');
+        const lbMediaWrap = document.getElementById('lb-media-wrap');
+        const lbCurrent  = document.getElementById('lb-current');
+        const lbTotal    = document.getElementById('lb-total');
 
-            // --- KLAVYE KONTROLÜ (PC İÇİN) ---
-            document.addEventListener('keydown', function(e) {
-                if (!document.getElementById('lightbox').classList.contains('show')) return;
-                if (e.key === 'ArrowRight') navigate(1);
-                if (e.key === 'ArrowLeft') navigate(-1);
-                if (e.key === 'Escape') closeLightbox();
+        // ── Build photo grid ─────────────────────────────────────────────────
+        // Use DocumentFragment for single reflow
+        const photoFrag = document.createDocumentFragment();
+        for (let i = 1; i <= PHOTO_COUNT; i++) {
+            const item = document.createElement('div');
+            item.className = 'photo-item';
+            item.setAttribute('role', 'listitem');
+            item.dataset.index = i;
+
+            const img = document.createElement('img');
+            img.src     = `galeri/mezuniyet (${i}).jpeg`;
+            img.alt     = `Mezuniyet fotoğrafı ${i}`;
+            img.loading = 'lazy';
+            img.decoding = 'async';
+            img.addEventListener('load', () => img.classList.add('loaded'));
+
+            const badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = i;
+            badge.setAttribute('aria-hidden', 'true');
+
+            item.appendChild(img);
+            item.appendChild(badge);
+            item.addEventListener('click', () => openLightbox('photos', i));
+            photoFrag.appendChild(item);
+        }
+        photoGrid.appendChild(photoFrag);
+
+        // ── Build video grid ─────────────────────────────────────────────────
+        const videoFrag = document.createDocumentFragment();
+        for (let i = 1; i <= VIDEO_COUNT; i++) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'video-wrapper';
+            wrapper.setAttribute('role', 'listitem');
+
+            // #t=0.001 trick: forces browser to decode first frame as thumbnail
+            const video = document.createElement('video');
+            video.preload  = 'metadata';
+            video.muted    = true;
+            video.playsInline = true;
+            video.setAttribute('aria-hidden', 'true');
+
+            const source = document.createElement('source');
+            source.src  = `video/anlar (${i}).mp4#t=0.001`;
+            source.type = 'video/mp4';
+            video.appendChild(source);
+
+            // Play overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'play-overlay';
+            overlay.setAttribute('aria-hidden', 'true');
+            overlay.innerHTML = `
+                <div class="play-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                </div>
+                <span class="video-label">Video ${i}</span>
+            `;
+
+            wrapper.appendChild(video);
+            wrapper.appendChild(overlay);
+            wrapper.addEventListener('click', () => openLightbox('videos', i));
+            videoFrag.appendChild(wrapper);
+        }
+        videoGrid.appendChild(videoFrag);
+
+        // ── Tab switching ────────────────────────────────────────────────────
+        window.openTab = function(tabName, btn) {
+            // Update buttons
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
             });
-        });
+            btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
 
-        // --- SEKME GEÇİŞİ ---
-        function openTab(tabName, btnElement) {
-            document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-            btnElement.classList.add("active");
-            
-            document.querySelectorAll(".content-section").forEach(sec => sec.classList.remove("active"));
-            
-            // Küçük bir gecikme animasyonun yeniden tetiklenmesini sağlar
-            setTimeout(() => { document.getElementById(tabName).classList.add("active"); }, 50);
-        }
+            // Update sections
+            document.querySelectorAll('.content-section').forEach(s => {
+                s.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        };
 
-        // --- LIGHTBOX FONKSİYONLARI ---
-        function openLightbox(mode, index) {
-            currentMode = mode;
-            currentIndex = index;
-            updateLightbox();
-            
-            const lb = document.getElementById('lightbox');
-            lb.style.display = 'block';
-            setTimeout(() => lb.classList.add('show'), 10);
-            document.body.style.overflow = 'hidden'; 
-        }
+        // ── Lightbox open ────────────────────────────────────────────────────
+        window.openLightbox = function(m, i) {
+            mode  = m;
+            index = i;
+            lbTotal.textContent = (m === 'photos') ? PHOTO_COUNT : VIDEO_COUNT;
+            renderLightboxMedia();
 
-        function closeLightbox() {
-            const lb = document.getElementById('lightbox');
-            lb.classList.remove('show');
-            
-            // Arka planda video çalıyorsa sesini kesmek ve durdurmak için wrapper'ı temizle
+            lightbox.classList.add('active');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => lightbox.classList.add('visible'));
+            });
+            document.body.style.overflow = 'hidden';
+        };
+
+        // ── Lightbox close ───────────────────────────────────────────────────
+        window.closeLightbox = function() {
+            lightbox.classList.remove('visible');
             setTimeout(() => {
-                lb.style.display = 'none';
-                document.getElementById('lightbox-wrapper').innerHTML = '';
+                lightbox.classList.remove('active');
+                lbMediaWrap.innerHTML = ''; // stop video playback
             }, 300);
-            document.body.style.overflow = 'auto'; 
+            document.body.style.overflow = '';
+        };
+
+        // ── Navigate ─────────────────────────────────────────────────────────
+        window.navigate = function(step) {
+            const max = (mode === 'photos') ? PHOTO_COUNT : VIDEO_COUNT;
+            index += step;
+            if (index > max) index = 1;
+            if (index < 1)   index = max;
+            renderLightboxMedia();
+        };
+
+        // ── Stage click (background) closes ─────────────────────────────────
+        window.handleStageClick = function(e) {
+            if (e.target === lbMediaWrap) closeLightbox();
+        };
+
+        // ── Render media in lightbox ─────────────────────────────────────────
+        function renderLightboxMedia() {
+            lbCurrent.textContent = index;
+            lbMediaWrap.innerHTML = '';
+            lbMediaWrap.style.cssText = 'position:absolute;inset:0;display:flex;justify-content:center;align-items:center;';
+
+            if (mode === 'photos') {
+                const img = document.createElement('img');
+                img.className = 'lightbox-media';
+                img.src = `galeri/mezuniyet (${index}).jpeg`;
+                img.alt = `Mezuniyet fotoğrafı ${index}`;
+                img.draggable = false;
+                lbMediaWrap.appendChild(img);
+            } else {
+                const video = document.createElement('video');
+                video.className = 'lightbox-media';
+                video.src       = `video/anlar (${index}).mp4`;
+                video.controls  = true;
+                video.autoplay  = true;
+                video.playsInline = true;
+                video.setAttribute('controlslist', 'nodownload');
+                lbMediaWrap.appendChild(video);
+            }
         }
 
-        // Arka plandaki siyah alana (fotoğraf dışına) tıklayınca kapat
-        document.getElementById('lightbox-wrapper').addEventListener('click', function(e) {
-            if (e.target === this) closeLightbox();
+        // ── Keyboard control ─────────────────────────────────────────────────
+        document.addEventListener('keydown', function(e) {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigate(1); }
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); navigate(-1); }
+            if (e.key === 'Escape') closeLightbox();
         });
 
-        // Yön tuşları fonksiyonu
-        function navigate(step, event) {
-            if(event) event.stopPropagation(); // Butona tıklayınca arka plan tıklanmasını (kapanmayı) engelle
-            
-            currentIndex += step;
-            const maxIndex = currentMode === 'photos' ? toplamFotoSayisi : toplamVideoSayisi;
-            
-            if (currentIndex > maxIndex) currentIndex = 1;
-            if (currentIndex < 1) currentIndex = maxIndex;
-            
-            updateLightbox();
-        }
+        // ── Swipe support (mobile) ───────────────────────────────────────────
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let swipeLocked = false;
 
-        // Lightbox içeriğini güncelle
-        function updateLightbox() {
-            const wrapper = document.getElementById('lightbox-wrapper');
-            wrapper.innerHTML = ''; 
-            
-            let mediaElement;
-            if (currentMode === 'photos') {
-                mediaElement = document.createElement('img');
-                mediaElement.src = `galeri/mezuniyet (${currentIndex}).jpeg`;
-                mediaElement.className = 'lightbox-media';
-                mediaElement.alt = `Görsel ${currentIndex}`;
-            } else {
-                mediaElement = document.createElement('video');
-                mediaElement.src = `video/anlar (${currentIndex}).mp4`;
-                mediaElement.className = 'lightbox-media';
-                mediaElement.controls = true;
-                mediaElement.autoplay = true;
-                mediaElement.playsinline = true; // Mobilde tam ekrana fırlamayı engeller
-            }
-            wrapper.appendChild(mediaElement);
-        }
+        lightbox.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].clientX;
+            touchStartY = e.changedTouches[0].clientY;
+            swipeLocked = false;
+        }, { passive: true });
 
-        // --- SWIPE (KAYDIRMA) DESTEĞİ (MOBİL İÇİN) ---
-        let touchstartX = 0; let touchendX = 0;
-        const lightboxElement = document.getElementById('lightbox');
-        
-        lightboxElement.addEventListener('touchstart', e => { 
-            touchstartX = e.changedTouches[0].screenX; 
-        }, {passive: true});
-        
-        lightboxElement.addEventListener('touchend', e => { 
-            touchendX = e.changedTouches[0].screenX; 
-            handleSwipe();
-        }, {passive: true});
+        lightbox.addEventListener('touchend', function(e) {
+            if (swipeLocked) return;
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            if (Math.abs(dx) < Math.abs(dy)) return; // vertical scroll — ignore
+            if (Math.abs(dx) < SWIPE_THRESHOLD)  return;
+            dx < 0 ? navigate(1) : navigate(-1);
+            swipeLocked = true;
+        }, { passive: true });
 
-        function handleSwipe() {
-            // Ekranda yeterince kaydırma yapıldıysa çalış (50px hassasiyet)
-            if (touchendX < touchstartX - 50) navigate(1); // Sola kaydır (İleri)
-            if (touchendX > touchstartX + 50) navigate(-1); // Sağa kaydır (Geri)
-        }
+        // ── Prevent scroll bleed when lightbox open ──────────────────────────
+        lightbox.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+
+    })();
     </script>
+
 </body>
 </html>
